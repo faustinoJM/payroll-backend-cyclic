@@ -12,6 +12,8 @@ import IPositionsRepository from "../../modules/positions/repositories/IPosition
 import PositionsRepository from "../../modules/positions/infra/typeorm/repositories/PositionsRepository";
 import { PayrollRepository } from "../../modules/payrolls/infra/typeorm/repositories/PayrollRepository";
 import { IPayrollRepository } from "../../modules/payrolls/repositories/IPayrollRepository";
+import ISettingRepository from "../../modules/settings/repositories/ISettingRepository";
+import SettingsRepository from "../../modules/settings/infra/typeorm/repositories/SettingsRepository";
 
 
 container.registerSingleton<IUsersRepository>(
@@ -42,6 +44,11 @@ container.registerSingleton<IPositionsRepository>(
 container.registerSingleton<IUsersTokensRepository>(
   "UsersTokensRepository",
   UsersTokensRepository
+)
+
+container.registerSingleton<ISettingRepository>(
+  "SettingsRepository",
+  SettingsRepository
 )
 
 
