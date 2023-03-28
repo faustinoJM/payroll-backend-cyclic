@@ -1,4 +1,3 @@
-import { IPayrollDemo, ISalario } from "../useCases/listPayrollX/ListPayrollUseCase";
 
 interface IListPayroll {
   id?: string;
