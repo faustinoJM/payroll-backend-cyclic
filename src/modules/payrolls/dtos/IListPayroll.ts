@@ -18,6 +18,7 @@ interface IListPayroll {
   absences?: number;
   cash_advances?: number;
   backpay?: number;
+  subsidy?: number;
   bonus?: number;
   IRPS?: number | string;
   INSS?: number | string;

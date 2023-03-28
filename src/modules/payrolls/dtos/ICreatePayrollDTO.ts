@@ -23,6 +23,7 @@ interface ICreatePayrollDTO {
   total_absences?: string;
   cash_advances?: string;
   backpay?: string;
+  subsidy?: string;
   bonus?: string;
   IRPS?: string;
   INSS?: string;

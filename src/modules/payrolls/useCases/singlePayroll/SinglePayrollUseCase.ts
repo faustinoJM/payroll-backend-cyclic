@@ -4,7 +4,7 @@ import IPositionsRepository from "../../../positions/repositories/IPositionsRepo
 import IDepartmentsRepository from "../../../departments/repositories/IDepartmentsRepository";
 import { IPayrollRepository } from "../../repositories/IPayrollRepository";
 import { IEmployeesRepository } from "../../../employees/repositories/IEmployeesRepository";
-import { IPayrollDemo, ISalario } from "../outputPayroll/OutputPayrollUseCase";
+import { IPayrollDemo, ISalario } from "../ListOutputPayroll/OutputPayrollUseCase";
 
 interface ICreatePayrollDTO2 {
   id?: string;
@@ -31,9 +31,12 @@ interface ICreatePayrollDTO2 {
   total_absences?: string;
   cash_advances?: string;
   backpay?: string;
+  subsidy?: string;
   bonus?: string;
   irps?:  string;
   inss?: string;
+  inss_employee?: string;
+  inss_company?: string;
   total_income?: string;
   tabelaSalario?: ISalario;
   payrollDemo?: IPayrollDemo;
@@ -98,10 +101,12 @@ class SinglePayrollUseCase {
           absences: payroll.absences,
           total_absences: payroll.total_absences as any,
           cash_advances: payroll.cash_advances,
+          subsidy: payroll.subsidy,
           bonus: payroll.bonus,
           backpay: payroll.backpay,
           irps: payroll.irps,
-          inss: payroll.inss,
+          inss_employee: payroll.inss_employee,
+          inss_company: payroll.inss_company,
           tabelaSalario: payroll.tabelaSalario,
           payrollDemo: payroll.payrollDemo
         };

@@ -83,6 +83,36 @@ export class CreateSettings1678524971766 implements MigrationInterface {
               isNullable: true,
             },
             {
+              name: "overtime",
+              type: "varchar",
+              isNullable: true,
+            },
+            {
+              name: "absences",
+              type: "varchar",
+              isNullable: true,
+            },
+            {
+              name: "cash_advances",
+              type: "varchar",
+              isNullable: true,
+            },
+            {
+              name: "backpay",
+              type: "varchar",
+              isNullable: true,
+            },
+            {
+              name: "bonus",
+              type: "varchar",
+              isNullable: true,
+            },
+            {
+              name: "subsidy",
+              type: "varchar",
+              isNullable: true,
+            },
+            {
               name: "flag_id",
               type: "int",
             },

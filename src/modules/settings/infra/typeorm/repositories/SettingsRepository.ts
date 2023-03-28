@@ -27,7 +27,13 @@ class SettingsRepository implements ISettingRepository {
     company_country,
     company_avatar,
     payroll_total_workdays_month,
-    payroll_total_workhours_day, flag_id }: ICreateSettingDTO): Promise<Setting> {
+    payroll_total_workhours_day,
+    overtime,
+    absences,
+    cash_advances,
+    bonus,
+    backpay,
+    subsidy,flag_id }: ICreateSettingDTO): Promise<Setting> {
 
       const setting = this.ormRepository.create({
             id,
@@ -44,7 +50,13 @@ class SettingsRepository implements ISettingRepository {
             company_country,
             company_avatar,
             payroll_total_workdays_month,
-            payroll_total_workhours_day,flag_id
+            payroll_total_workhours_day, 
+            overtime,
+            absences,
+            cash_advances,
+            bonus,
+            backpay,
+            subsidy,flag_id
       })
 
       await this.ormRepository.save(setting);

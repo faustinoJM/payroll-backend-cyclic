@@ -8,8 +8,6 @@ class CreatePayrollController {
         const { 
               month,
               year,
-              month_total_workdays,
-              day_total_workhours,
               } = request.body;
 
         const createPayrollUseCase = container.resolve(CreatePayrollUseCase);
@@ -17,8 +15,6 @@ class CreatePayrollController {
         const payrolls = await createPayrollUseCase.execute(
                 month,
                 year,
-                month_total_workdays,
-                day_total_workhours,
                 )
 
         return response.json(payrolls);

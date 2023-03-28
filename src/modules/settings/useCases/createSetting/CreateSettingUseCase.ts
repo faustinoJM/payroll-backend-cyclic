@@ -32,7 +32,13 @@ class CreateSettingUseCase {
               company_country: data.company_country,
               company_avatar: data.company_avatar,
               payroll_total_workdays_month: data.payroll_total_workdays_month,
-              payroll_total_workhours_day: data.payroll_total_workhours_day
+              payroll_total_workhours_day: data.payroll_total_workhours_day,
+              overtime: data.overtime,
+              absences: data.absences,
+              cash_advances: data.cash_advances,
+              bonus: data.bonus,
+              backpay: data.backpay,
+              subsidy: data.subsidy,
             });
         } else {
           await this.settingRepository.create(data);

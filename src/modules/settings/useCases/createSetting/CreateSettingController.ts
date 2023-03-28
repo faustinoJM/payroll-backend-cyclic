@@ -20,6 +20,12 @@ class CreateSettingController {
           company_avatar,
           payroll_total_workdays_month,
           payroll_total_workhours_day,
+          overtime,
+          absences,
+          cash_advances,
+          bonus,
+          backpay,
+          subsidy
         } = request.body;
 
 
@@ -40,6 +46,12 @@ class CreateSettingController {
           company_avatar,
           payroll_total_workdays_month,
           payroll_total_workhours_day,
+          overtime,
+          absences,
+          cash_advances,
+          bonus,
+          backpay,
+          subsidy
          })
 
         return response.status(201).send();

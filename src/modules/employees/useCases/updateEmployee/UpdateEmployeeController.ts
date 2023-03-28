@@ -12,9 +12,11 @@ class UpdateEmployeeController {
       gender,
       address,
       contact,
+      contact2,
       email,
       nuit,
-      bonus,
+      vacation,
+      subsidy,
       department,
       position,
       start_date,
@@ -35,9 +37,11 @@ class UpdateEmployeeController {
       gender,
       address,
       contact,
+      contact2,
       email,
       nuit,
-      bonus,
+      vacation,
+      subsidy,
       department,
       position,
       start_date,
@@ -46,7 +50,7 @@ class UpdateEmployeeController {
       bank_account,
       nib,
       social_security,})
-      console.log("++++++++", employee)
+      // console.log("++++++++", employee)
 
     return response.status(204).json(employee)
   }

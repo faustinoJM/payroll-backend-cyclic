@@ -10,6 +10,7 @@ interface ICreatePayrollDTO2 {
   dependents?: number;
   position_name?: string;
   departament_name?: string;
+  nib?: number;
   salary_base?: string;
   salary_liquid?: string;
   month?: string;
@@ -26,9 +27,14 @@ interface ICreatePayrollDTO2 {
   cash_advances?: string;
   backpay?: string;
   bonus?: string;
+  subsidy?: string;
   irps?:  string;
-  inss?: string;
+  inss_employee?: string;
+  inss_company?: string;
+  total_inss?: string;
   total_income?: string;
+  total_salary_liquid?: string;
+  total_salary_base?: string;
   tabelaSalario?: ISalario;
   payrollDemo?: IPayrollDemo;
 }

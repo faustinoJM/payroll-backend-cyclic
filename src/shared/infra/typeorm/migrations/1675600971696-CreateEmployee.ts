@@ -29,7 +29,7 @@ export class CreateEmployee1675600971696 implements MigrationInterface {
           },
           {
             name: "salary",
-            type: "real",
+            type: "double precision",
           },
           {
             name: "birth_date",
@@ -77,8 +77,13 @@ export class CreateEmployee1675600971696 implements MigrationInterface {
             type: "bigint",
           },
           {
-            name: "bonus",
-            type: "real",
+            name: "vacation",
+            type: "int",
+            isNullable: true
+          },
+          {
+            name: "subsidy",
+            type: "double precision",
           },
           {
             name: "department",

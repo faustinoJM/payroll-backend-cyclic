@@ -81,10 +81,10 @@ class OutputPayrollUseCase {
         payrolls2.map((payroll) =>{
           const employee =  employees.find(employee => employee.id === payroll.employee_uid)
           // console.log(employee)
-          if(!employee) {
-            throw new AppError("Employee doesn exists")
-          }
-          
+          // if(!employee) {
+          //   throw new AppError("Employee doesn exists")
+          // }
+         if (employee) {
          let employeePayroll: ICreatePayrollDTO2 = {
             id: payroll.id,
             employee_uid: employee.id,
@@ -93,6 +93,7 @@ class OutputPayrollUseCase {
             dependents: employee.dependents,
             position_name: positionName(employee.position_id!)?.name,
             departament_name: departmentName(employee.department_id!)?.name,
+            nib: employee.nib,
             salary_base: payroll.salary_base, 
             salary_liquid: payroll.salary_liquid,
             month: payroll.month,
@@ -108,17 +109,57 @@ class OutputPayrollUseCase {
             absences: payroll.absences,
             total_absences: payroll.total_absences as any,
             cash_advances: payroll.cash_advances,
+            subsidy: payroll.subsidy,
             bonus: payroll.bonus,
             backpay: payroll.backpay,
             irps: payroll.irps,
-            inss: payroll.inss,
+            inss_employee: payroll.inss_employee,
+            inss_company: payroll.inss_company,
+            total_inss: +(payroll.inss_company) + (+payroll.inss_employee) as any,
             tabelaSalario: payroll.tabelaSalario,
             payrollDemo: payroll.payrollDemo
           };
-
        
           listEmployeesPayrolls.push(employeePayroll)
+        } else {
+          //employe doesn exist
+          let employeePayroll: ICreatePayrollDTO2 = {
+            id: payroll.id,
+            employee_uid: null as any,
+            employee_id: null as any,
+            employee_name: payroll.employee_name,
+            dependents: payroll.dependents,
+            position_name: payroll.position_name,
+            departament_name: payroll.departament_name,
+            nib: payroll.nib,
+            salary_base: payroll.salary_base, 
+            salary_liquid: payroll.salary_liquid,
+            month: payroll.month,
+            year: payroll.year,
+            total_income: payroll.total_income ,
+            overtime50: payroll.overtime50,
+            overtime100: payroll.overtime100,
+            total_overtime: payroll.total_overtime,
+            month_total_workdays: payroll.month_total_workdays,
+            day_total_workhours: payroll.day_total_workhours,
+            base_day: payroll.base_day,
+            base_hour: payroll.base_hour,
+            absences: payroll.absences,
+            total_absences: payroll.total_absences as any,
+            cash_advances: payroll.cash_advances,
+            subsidy: payroll.subsidy,
+            bonus: payroll.bonus,
+            backpay: payroll.backpay,
+            irps: payroll.irps,
+            inss_employee: payroll.inss_employee,
+            inss_company: payroll.inss_company,
+            total_inss: +(payroll.inss_company) + (+payroll.inss_employee) as any,
+            tabelaSalario: payroll.tabelaSalario,
+            payrollDemo: payroll.payrollDemo
+          }
+          listEmployeesPayrolls.push(employeePayroll)
 
+        }
         })
 
         return listEmployeesPayrolls
@@ -127,14 +168,3 @@ class OutputPayrollUseCase {
     }
 }
 export { OutputPayrollUseCase }
-
-
-          // if(month && year && payrolls) {
-          //   return payrolls.filter(payroll => payroll.month === month && payroll.year === year)
-          // } else if(!month && year && payrolls) {
-          //   return payrolls.filter(payroll => payroll.year === year)
-          // } else if(month && !year && payrolls) {
-          //   return payrolls.filter(payroll => payroll.month === month)
-          // } //else {
-          //  return payrolls
-          // }

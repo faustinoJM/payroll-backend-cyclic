@@ -14,6 +14,12 @@ export default interface ICreateSettingDTO {
   company_avatar?: string
   payroll_total_workdays_month?: number;
   payroll_total_workhours_day?: number;
+  overtime?: string
+  absences?: string
+  cash_advances?: string
+  bonus?: string
+  backpay?: string
+  subsidy?: string
   flag_id?: number;
 }
 

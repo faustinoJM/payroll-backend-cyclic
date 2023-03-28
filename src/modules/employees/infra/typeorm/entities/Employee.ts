@@ -45,13 +45,19 @@ class Employee {
     contact: number;
 
     @Column()
+    contact2: number;
+
+    @Column()
     email: string;
 
     @Column()
     nuit: number;
 
     @Column()
-    bonus: string;
+    vacation: number;
+
+    @Column()
+    subsidy: string;
 
     @Column()
     start_date: Date;
@@ -102,25 +108,4 @@ class Employee {
 export { Employee };
 
 
-        // name: string;
-        // birth_date: string;
-        // place_birth: string;
-        // nationality:  string;
-        // bi: string;
-        // marital_status: string;
-        // gender: string;
-        // address: string;
-        // contact: string;
-        // email: string;
-        // nuit: string;
-        // dependents: string;
-        // salary: string;
-        // bonus: string;
-        // department: string;
-        // position: string;
-        // start_date: string;
-        // employee_status: string;
-        // bank_name: string;
-        // bank_account: string;
-        // nib: string;
-        // social_security: string;
+   

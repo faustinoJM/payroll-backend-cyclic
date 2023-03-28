@@ -15,6 +15,15 @@ export class CreatePayroll1677152845602 implements MigrationInterface {
           {
             name: 'employee_uid',
             type: 'uuid', 
+            isNullable: true
+          },
+          {
+            name: 'employee_name',
+            type: 'varchar', 
+          },
+          {
+            name: "dependents",
+            type: "int",
           },
           {
             name: "year",
@@ -25,16 +34,28 @@ export class CreatePayroll1677152845602 implements MigrationInterface {
             type: "varchar",
           },
           {
+            name: "position_name",
+            type: "varchar",
+          },
+          {
+            name: "departament_name",
+            type: "varchar",
+          },
+          {
+            name: "nib",
+            type: "bigint",
+          },
+          {
             name: "salary_base",
-            type: "real",
+            type: "double precision",
           },
           {
             name: "total_income",
-            type: "real",
+            type: "double precision",
           },
           {
             name: "salary_liquid",
-            type: "real",
+            type: "double precision",
           },
           {
             name: "overtime50",
@@ -46,7 +67,7 @@ export class CreatePayroll1677152845602 implements MigrationInterface {
           },
           {
             name: "total_overtime",
-            type: "real",
+            type: "double precision",
           },
           {
             name: "month_total_workdays",
@@ -58,11 +79,11 @@ export class CreatePayroll1677152845602 implements MigrationInterface {
           },
           {
             name: "base_day",
-            type: "real",
+            type: "double precision",
           },
           {
             name: "base_hour",
-            type: "real",
+            type: "double precision",
           },
           {
             name: "absences",
@@ -70,27 +91,35 @@ export class CreatePayroll1677152845602 implements MigrationInterface {
           },
           {
             name: "total_absences",
-            type: "real",
+            type: "double precision",
           },
           {
             name: "cash_advances",
-            type: "real",
+            type: "double precision",
           },
           {
             name: "backpay",
-            type: "real",
+            type: "double precision",
+          },
+          {
+            name: "subsidy",
+            type: "double precision",
           },
           {
             name: "bonus",
-            type: "real",
+            type: "double precision",
           },
           {
             name: "irps",
-            type: "real",
+            type: "double precision",
           },          
           {
-            name: "inss",
-            type: "real",
+            name: "inss_employee",
+            type: "double precision",
+          },
+          {
+            name: "inss_company",
+            type: "double precision",
           },
           {
             name: 'created_at',

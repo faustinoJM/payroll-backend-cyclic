@@ -11,7 +11,11 @@ class Payroll {
     @Column()
     employee_uid: string;
 
+    @Column()
     employee_name: string;
+
+    @Column()
+    dependents: number;
 
     @ManyToOne(() => Employee)
     @JoinColumn({ name: "employee_uid" })
@@ -29,9 +33,14 @@ class Payroll {
     @Column()
     year: number;
 
+    @Column()
     position_name: string;
 
+    @Column()
     departament_name: string;
+
+    @Column()
+    nib: number;
 
     @Column()
     overtime50: number;
@@ -70,10 +79,16 @@ class Payroll {
     bonus: string;
 
     @Column()
+    subsidy: string;
+
+    @Column()
     irps: string;
 
     @Column()
-    inss: string;
+    inss_employee: string;
+
+    @Column()
+    inss_company: string;
 
     @Column()
     total_income: string;

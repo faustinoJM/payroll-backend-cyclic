@@ -76,7 +76,7 @@ class InputPayrollUseCase {
         ) {}
 
     async execute({ id, overtime50, overtime100,
-                    absences, cash_advances, backpay}: IRequestList) {
+                    absences, bonus, cash_advances, backpay}: IRequestList) {
         const listEmployeesPayrolls: ICreatePayrollDTO2[] = [];
         // let employeePayroll: ICreatePayrollTO = {}
         const payrolls = await this.payrollRepository.list()
@@ -109,9 +109,13 @@ class InputPayrollUseCase {
           backpay = backpay
         else 
           backpay = +payroll.backpay
+        if (bonus! >= 0) 
+          bonus = bonus
+        else 
+          bonus = +payroll.bonus
   
-          console.log("auauauauau"+absences)
-        if(employees.length < 0) {
+          // console.log("auauauauau"+absences)
+        if(employees.length <= 0) {
             throw new AppError("Employees Doesn't Exists");
         }
 
@@ -123,28 +127,22 @@ class InputPayrollUseCase {
           return departments.find((department) => department.id === departmentId)
         }
 
-        function formatSalary() {
-          return new Intl.NumberFormat("de-DE",{minimumFractionDigits: 2})
-        }
-
-
-          const employee =  employees.find(employee => employee.id === payroll.employee_uid)
+        const employee =  employees.find(employee => employee.id === payroll.employee_uid)
           // console.log(employee)
-          if(!employee) {
-            throw new AppError("Employee doesn exists")
-          }
+        if(employee) {
 
           let base_day = calcSalarioEmDias(payroll.month_total_workdays, +employee.salary)
           let base_hour = calcSalarioPorHora(base_day, payroll.day_total_workhours)
           let total_overtime = calcTotalHorasExtras(base_hour, overtime50!, overtime100!)
           let total_absences = calcTotalFaltas(absences!, base_day)
           // let total_income = +calcTotalSalario(+employee.salary, total_overtime!, total_absences, +cash_advances!, +backpay!, +employee.bonus).toFixed(2)
-          let total_income = +calcularSalarioBruto(+employee.salary, total_overtime!, total_absences, +backpay!, +employee.bonus).toFixed(2)
+          let total_income = +calcularSalarioBruto(+employee.salary, total_overtime!, total_absences, +backpay!, +bonus!, +employee.subsidy,).toFixed(2)
           let IRPS = retornarIRPS(+total_income!, employee.dependents) 
           let INSS = retornarINSS(+total_income!)
+          let INSS_Company = retornarINSS_Company(+total_income)
           let salary_liquid = calcularSalarioLiquido(+total_income!, IRPS, INSS, +cash_advances!)
           // console.log(parseFloat(employee.salary).toFixed(2))
-          console.log((+employee.salary).toFixed(2))
+          // console.log((+employee.salary).toFixed(2))
           
          let employeePayroll: ICreatePayrollDTO2 = {
             id: payroll.id,
@@ -153,11 +151,12 @@ class InputPayrollUseCase {
             dependents: employee.dependents,
             position_name: positionName(employee.position_id!)?.name,
             departament_name: departmentName(employee.department_id!)?.name,
-            salary_base: employee.salary, //formatSalary().format(+(+employee.salary).toFixed(2)),
-            salary_liquid: salary_liquid as any,//formatSalary().format(+salary_liquid.toFixed(2)),
+            nib: employee.nib,
+            salary_base: employee.salary, 
+            salary_liquid: salary_liquid as any,
             month: payroll.month,
             year: payroll.year,
-            total_income: total_income  as any,//formatSalary().format(+(+total_income!).toFixed(2)),
+            total_income: total_income  as any,
             overtime50,
             overtime100,
             total_overtime: total_overtime as any, //((+payroll.total_overtime) + total_overtime) as any,
@@ -168,34 +167,25 @@ class InputPayrollUseCase {
             absences,
             total_absences: total_absences as any,
             cash_advances: cash_advances as any,
-            bonus: employee.bonus,
+            subsidy: employee.subsidy,
+            bonus: bonus as any,
             backpay: backpay as any,
-            irps: IRPS as any,//formatSalary().format(+(+IRPS!).toFixed(2)),
-            inss: retornarINSS(total_income) as any,//formatSalary().format(+(+total_income! * 0.03).toFixed(2)),
+            irps: IRPS as any,
+            inss_employee: retornarINSS(total_income) as any,
+            inss_company: INSS_Company as any,
             tabelaSalario: retornarTabela(+total_income!, employee.dependents),
             payrollDemo: retornarPayrollDemo(+employee.salary, overtime50,
               overtime100, payroll.month_total_workdays, payroll.day_total_workhours, absences,
-              +cash_advances!, +backpay!, +employee.bonus, +total_income!, +IRPS!, +INSS!)
+              +cash_advances!, +backpay!, +employee.subsidy, +bonus!, +total_income!, +IRPS!, +INSS!)
           };
 
-          // let employeePayroll: ICreatePayrollDTO = {}
-          // employeePayroll.employee_id = employe.id;
-          // employeePayroll.name = employe.name;
-          // employeePayroll.salary_base = employe.salary;
-          // employeePayroll.total_income = employe.salary;
-          // employeePayroll.month = month;
-          // employeePayroll.year = year;
-          // delete employeePayroll.tabelaSalario
+          //salvar no banco de dados
           this.payrollRepository.create(employeePayroll).then().
           catch((err) => console.log(err))
-          //salvar no banco de dados
           
           listEmployeesPayrolls.push(employeePayroll)
           console.log(listEmployeesPayrolls)
-
-          //salvar no banco de dados
-
-
+        }
         return listEmployeesPayrolls
     }
 }
@@ -249,6 +239,10 @@ function retornarINSS(salary: number) {
   return salary * 0.03;
 }
 
+function retornarINSS_Company(salary: number) {
+  return salary * 0.04;
+}
+
 function retornarPayrollDemo(salary_base: number,  overtime50?: number,
   overtime100?: number,
   month_total_workdays?: number,
@@ -257,6 +251,7 @@ function retornarPayrollDemo(salary_base: number,  overtime50?: number,
   cash_advances?: number,
   backpay?: number,
   bonus?: number,
+  subsidy?: number,
   salary_liquid?: number,
   IRPS?: number,
   INSS?: number) {
@@ -266,7 +261,8 @@ function retornarPayrollDemo(salary_base: number,  overtime50?: number,
   overtime100 = calcTotalHoraExtra100(hourSalary, overtime100!)
   totalAbsences = calcTotalFaltas(totalAbsences!, daySalary)
   cash_advances = cash_advances
-  let totalSalario = +calcularSalarioBruto(salary_base, overtime100 + overtime50 , totalAbsences, backpay!, bonus!).toFixed(2)
+  subsidy = subsidy
+  let totalSalario = +calcularSalarioBruto(salary_base, overtime100 + overtime50 , totalAbsences, backpay!, bonus!, subsidy!).toFixed(2)
   salary_liquid = calcularSalario(totalSalario, IRPS!)
   backpay = backpay
   bonus = bonus
@@ -471,13 +467,13 @@ function calcTotalFaltas(faltas: number, salarioEmDias: number) {
 }
 
 function calcularSalarioBruto(salario_base: number, totalHorasExtras: number,
-   totalFaltas: number,  totalRetroativos: number, bonus: number) {
+   totalDescontoFaltas: number,  totalRetroativos: number, bonus: number, subsidio: number) {
     
-  return salario_base + totalHorasExtras - totalFaltas - (- totalRetroativos - bonus);
+  return salario_base + totalHorasExtras - totalDescontoFaltas + totalRetroativos + bonus + subsidio;
 }
 
-function calcularSalarioLiquido(totalSalario: number, IRPS: number, INSS: number, totalAdiantamento: number) {
-  return totalSalario - IRPS - INSS - totalAdiantamento;
+function calcularSalarioLiquido(totalSalario: number, IRPS: number, INSS_Employee: number, totalAdiantamento: number) {
+  return totalSalario - IRPS - INSS_Employee - totalAdiantamento;
 }
 
 

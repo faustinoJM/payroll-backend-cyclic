@@ -14,9 +14,11 @@ interface ICreateEmployeeDTO {
   gender?: string;
   address?: string;
   contact?:  number;
+  contact2?: number;
   email?: string;
   nuit?: number;
-  bonus?:  string;
+  vacation?: number;
+  subsidy?:  string;
   department?: string;
   position?: string;
   start_date?: Date;

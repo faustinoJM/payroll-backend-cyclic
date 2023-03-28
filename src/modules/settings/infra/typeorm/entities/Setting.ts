@@ -49,6 +49,24 @@ class Setting {
   payroll_total_workhours_day: number;
 
   @Column()
+  overtime: string
+
+  @Column()
+  absences: string
+
+  @Column()
+  cash_advances: string
+
+  @Column()
+  bonus: string
+
+  @Column()
+  backpay: string
+
+  @Column()
+  subsidy: string
+
+  @Column()
   flag_id: number;
 
   @CreateDateColumn()
@@ -64,3 +82,4 @@ class Setting {
 }
 
 export default Setting;
+
