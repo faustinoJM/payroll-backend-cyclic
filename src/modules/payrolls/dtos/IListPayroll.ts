@@ -22,8 +22,7 @@ interface IListPayroll {
   IRPS?: number | string;
   INSS?: number | string;
   total_income?: number | string
-  tabelaSalario?: ISalario;
-  payrollDemo?: IPayrollDemo;
+
 }
 
 export { IListPayroll };
